@@ -5,7 +5,7 @@ La arquitectura de esta base de datos ha sido normalizada para garantizar la int
 ## :gear: Herramientas utilizadas:
 
 * ### [dbdiagram](dbdiagram.io)
-<table >
+<table style="border: none;">
   <tr>
     <td>
       <h4>Plataforma online que trabaja con un Lenguaje Específico de Dominio (DSL) sencillo, para la generación de giagramas entidad-relación (ER).</h4>
