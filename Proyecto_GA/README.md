@@ -49,6 +49,20 @@ La arquitectura de esta base de datos ha sido normalizada para garantizar la int
   </tr>
 </table>
 
+###	Conceptos importantes en la base de datos.
+- GLOB
+	- DESCRIPCIÓN / EJEMPLO / IMAGEN
+- IN
+	- DESCRIPCIÓN / EJEMPLO / IMAGEN
+- LIKE
+	- DESCRIPCIÓN / EJEMPLO / IMAGEN
+- CHECK
+	- DESCRIPCIÓN / EJEMPLO / IMAGEN
+- CONSTRAINT
+	- DESCRIPCIÓN / EJEMPLO / IMAGEN
+- sqlite_secuence
+	- DESCRIPCIÓN / EJEMPLO / IMAGEN
+
 ## Estructuras de las tablas:
 
 - ### carrera
@@ -198,4 +212,41 @@ CREATE TABLE "carga_academica" (
 );
 
 CREATE UNIQUE INDEX "idx_carga_unica" ON "carga_academica" ("matricula_id", "clase_id", "ciclo_id");
+```
+
+---
+
+- ### asistencia
+```sql
+CREATE TABLE "asistencia" (
+	"asistencia_id"	INTEGER NOT NULL,
+	"universal_id"	TEXT NOT NULL,
+	"matricula_id"	TEXT NOT NULL,
+	"fecha"	TEXT NOT NULL,
+	"hora"	TEXT NOT NULL,
+	"opcion_menu"	TEXT NOT NULL,
+	"clase_id"	INTEGER NOT NULL,
+	"sincronizado"	INTEGER NOT NULL DEFAULT 0,
+	PRIMARY KEY("asistencia_id" AUTOINCREMENT),
+	FOREIGN KEY("clase_id") REFERENCES "clase"("clase_id"),
+	FOREIGN KEY("matricula_id") REFERENCES "estudiante"("matricula_id"),
+	CONSTRAINT "error_formato_fecha" CHECK("fecha" GLOB '[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]'),
+	CONSTRAINT "error_formato_hora" CHECK("hora" GLOB '[0-2][0-9]:[0-5][0-9]:[0-5][0-9]'),
+	CONSTRAINT "error_asistencia_opcion_menu" CHECK("opcion_menu" IN ('entrada', 'salida', 'horario')),
+	CONSTRAINT "error_asistencia_sincronizado" CHECK("sincronizado" IN (0,1))
+);
+```
+
+---
+
+- ### usuario
+```sql
+CREATE TABLE "usuario" (
+	"usuario_id"	INTEGER NOT NULL,
+	"nombre_usuario"	TEXT NOT NULL,
+	"contrasena"	TEXT NOT NULL,
+	"rol"	TEXT NOT NULL,
+	PRIMARY KEY("usuario_id" AUTOINCREMENT),
+	CONSTRAINT "error_nombre_rol" CHECK("rol" IN ('consultor', 'admin'))
+);
 ```
