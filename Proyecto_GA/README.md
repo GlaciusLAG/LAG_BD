@@ -18,6 +18,44 @@ La arquitectura de esta base de datos ha sido normalizada para garantizar la int
 * ### [dbdiagram](dbdiagram.io)
 
 Plataforma online que trabaja con un Lenguaje Específico de Dominio (DSL) sencillo (DBML), para la generación de diagramas entidad-relación (ER).
+![dbdiagram](img/dbdiagram.png)
+
+* ### [Google Sheets](https://workspace.google.com/intl/es-419_mx/products/sheets/)
+
+<p>
+  <a href="https://htmlpreview.github.io/?https://github.com/GlaciusLAG/LAG_BD/blob/main/Proyecto_GA/src/diccionario.html" target="_blank">
+    <img src="https://img.shields.io/badge/Diccionario_de_Datos-HTML-orange?style=for-the-badge&logo=html5&logoColor=white" />
+  </a>
+</p>
+
+* ### [Visual Studio Code](https://code.visualstudio.com/download)
+    * Versión 1.109.5
+    + Extensiones
+        * PHP IntelliSense (Intelephense)
+        * MySQL (Database Client)
+
+|![VisualStudioCode](img/visual.png)
+
+* ### [XAMPP](https://www.apachefriends.org/es/download.html)
+    + Ecosistema
+        - XAMPP (centro de control)
+        - MySQL
+        - phpMyAdmin
+        - PHP
+    * Versión (8.2.12 / PHP 8.2.12)
+  
+![XAMPP](img/xampp.png)
+![XAMPP_PANEL](img/xampp2.png)
+
+* ### [DB Browser for SQLite](https://sqlitebrowser.org/dl/)
+    * Versión 3.13.1
+
+![DB_Browser](img/dbbrowser.png)
+![DB_Browser](img/dbbrowser2.png)
+![DB_Browser](img/dbbrowser3.png)
+
+## :triangular_ruler: Diagrama Entidad-Relación
+
 
 <p>
   <a href="src/diagrama.pdf" target="_blank">
@@ -26,37 +64,14 @@ Plataforma online que trabaja con un Lenguaje Específico de Dominio (DSL) senci
   </a>
 </p>
 
-* ### [Google Sheets](https://workspace.google.com/intl/es-419_mx/products/sheets/)
-(Explicación / Imágenes)
+## :key: Creación de la BD en SQLite
 
 <p>
-  <a href="https://htmlpreview.https://github.com/GlaciusLAG/LAG_BD/tree/main/Proyecto_GA/src/diccionario.html" target="_blank">
-    <img src="https://img.shields.io/badge/Diccionario_de_Datos-HTML-orange?style=for-the-badge&logo=html5&logoColor=white" />
+  <a href="https://github.com/GlaciusLAG/LAG_BD/raw/main/Proyecto_GA/src/tu_archivo.db">
+    <img src="https://img.shields.io/badge/Descargar_Base_de_Datos-SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white" />
   </a>
 </p>
 
-* ### [Visual Studio Code](https://code.visualstudio.com/download)
-    + (Explicación / Imágenes)
-    * Versión 1.109.5
-    + Extensiones
-        * PHP IntelliSense (Intelephense)
-        * MySQL (Database Client)
-
-* ### [XAMPP](https://www.apachefriends.org/es/download.html)
-    + Exosistema (Explicación / Imágenes)
-        - XAMPP (centro de control)
-        - MySQL
-        - phpMyAdmin
-        - PHP
-    * Versión (8.2.12 / PHP 8.2.12)
-
-* ### [DB Browser for SQLite](https://sqlitebrowser.org/dl/)
-    + (Explicación / Imágenes)
-    * Versión 3.13.1
-
-## :triangular_ruler: Diagrama Entidad-Relación
-
-## :key: Creación de la BD en SQLite
 <table>
   <tr>
     <td> Base de Datos
@@ -67,17 +82,11 @@ Plataforma online que trabaja con un Lenguaje Específico de Dominio (DSL) senci
 
 ###	Conceptos importantes en la base de datos.
 - GLOB
-	- DESCRIPCIÓN / EJEMPLO / IMAGEN
 - IN
-	- DESCRIPCIÓN / EJEMPLO / IMAGEN
 - LIKE
-	- DESCRIPCIÓN / EJEMPLO / IMAGEN
 - CHECK
-	- DESCRIPCIÓN / EJEMPLO / IMAGEN
 - CONSTRAINT
-	- DESCRIPCIÓN / EJEMPLO / IMAGEN
 - sqlite_secuence
-	- DESCRIPCIÓN / EJEMPLO / IMAGEN
 
 ## Estructuras de las tablas:
 
