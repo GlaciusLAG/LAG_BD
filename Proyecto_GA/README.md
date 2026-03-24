@@ -5,6 +5,7 @@
 </p>
 
 La arquitectura de esta base de datos ha sido normalizada para garantizar la integridad y persistencia de la información, asegurando que cada asistencia sea comprobable y cumpla con las reglas de la institución.
+
 <p align='center'>
 	<img src=https://img.shields.io/badge/SQLite-%23003B57?style=plastic&logo=SQLite&logoColor=white&link=https%3A%2F%2Fsqlite.org%2F>
 	<img src=https://img.shields.io/badge/dbdiagram-%23003D8F?style=plastic&logo=diagrams.net&logoColor=white&link=https%3A%2F%2Fdbdiagram.io%2Fhome>
@@ -18,6 +19,7 @@ La arquitectura de esta base de datos ha sido normalizada para garantizar la int
 * ### [dbdiagram](dbdiagram.io)
 
 Plataforma online que trabaja con un Lenguaje Específico de Dominio (DSL) sencillo (DBML), para la generación de diagramas entidad-relación (ER).
+
 ![dbdiagram](img/dbdiagram.png)
 
 * ### [Google Sheets](https://workspace.google.com/intl/es-419_mx/products/sheets/)
@@ -45,13 +47,16 @@ Plataforma online que trabaja con un Lenguaje Específico de Dominio (DSL) senci
     * Versión (8.2.12 / PHP 8.2.12)
   
 ![XAMPP](img/xampp.png)
+
 ![XAMPP_PANEL](img/xampp2.png)
 
 * ### [DB Browser for SQLite](https://sqlitebrowser.org/dl/)
     * Versión 3.13.1
 
 ![DB_Browser](img/dbbrowser.png)
+
 ![DB_Browser](img/dbbrowser2.png)
+
 ![DB_Browser](img/dbbrowser3.png)
 
 ## :triangular_ruler: Diagrama Entidad-Relación
