@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Doto&size=50&duration=800&pause=200&color=F7E618&center=true&vCenter=true&width=435&lines=Gestor;de;Asistencia;(+%CD%A1%C2%B0+%CD%9C%CA%96+%CD%A1%C2%B0)" /></a>
+  <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Doto&size=50&duration=925&pause=200&color=F7E618&center=true&vCenter=true&width=435&lines=Gestor;de;Asistencia;(+%CD%A1%C2%B0+%CD%9C%CA%96+%CD%A1%C2%B0)" /></a>
   <br>
   <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Doto&size=44&duration=100&pause=200&color=F7EA53&center=true&vCenter=true&width=435&lines=LUMEN;++UMEN;L+MEN;LU+EN;LUM+N;LUME+;LUMEN;LUM+N;LU+EN;L+MEN;+UMEN;LUMEN;%F0%9F%92%A1LUMEN%F0%9F%92%A1;LUMEN;%F0%9F%92%A1LUMEN%F0%9F%92%A1" /></a>
 </p>
@@ -16,19 +16,24 @@ La arquitectura de esta base de datos ha sido normalizada para garantizar la int
 ## :gear: Herramientas utilizadas:
 
 * ### [dbdiagram](dbdiagram.io)
-<table border="0">
-  <tr>
-    <td>
-      <h4>Plataforma online que trabaja con un Lenguaje Específico de Dominio (DSL) sencillo, para la generación de giagramas entidad-relación (ER).</h4>
-    </td>
-    <td align="left">
-      <img src="img/dbdiagram_logo.png" width="100%" alt="dbdiagram_Logo">
-    </td>
-  </tr>
-</table>
+
+Plataforma online que trabaja con un Lenguaje Específico de Dominio (DSL) sencillo (DBML), para la generación de diagramas entidad-relación (ER).
+
+<p>
+  <a href="src/diagrama.pdf" target="_blank">
+    <img src="img/diagrama.png" alt="Ver Diagrama PDF" width="400" style="border: 1px solid #eee;">
+    <br>
+  </a>
+</p>
 
 * ### [Google Sheets](https://workspace.google.com/intl/es-419_mx/products/sheets/)
 (Explicación / Imágenes)
+
+<p>
+  <a href="https://htmlpreview.https://github.com/GlaciusLAG/LAG_BD/tree/main/Proyecto_GA/src/diccionario.html" target="_blank">
+    <img src="https://img.shields.io/badge/Diccionario_de_Datos-HTML-orange?style=for-the-badge&logo=html5&logoColor=white" />
+  </a>
+</p>
 
 * ### [Visual Studio Code](https://code.visualstudio.com/download)
     + (Explicación / Imágenes)
