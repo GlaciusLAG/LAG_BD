@@ -16,7 +16,7 @@ La arquitectura de esta base de datos ha sido normalizada para garantizar la int
 
 ## :gear: Herramientas utilizadas:
 
-* ### [dbdiagram](dbdiagram.io)
+* ### [dbdiagram](https://dbdiagram.io/home)
 
 Plataforma online que trabaja con un Lenguaje Específico de Dominio (DSL) sencillo (DBML), para la generación de diagramas entidad-relación (ER).
 
