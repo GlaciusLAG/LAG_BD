@@ -1,6 +1,17 @@
-# Diseño y estructura de BD en gestión escolar.
+<p align="center">
+  <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Doto&size=50&duration=800&pause=200&color=F7E618&center=true&vCenter=true&width=435&lines=Gestor;de;Asistencia;(+%CD%A1%C2%B0+%CD%9C%CA%96+%CD%A1%C2%B0)" /></a>
+  <br>
+  <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Doto&size=44&duration=100&pause=200&color=F7EA53&center=true&vCenter=true&width=435&lines=LUMEN;++UMEN;L+MEN;LU+EN;LUM+N;LUME+;LUMEN;LUM+N;LU+EN;L+MEN;+UMEN;LUMEN;%F0%9F%92%A1LUMEN%F0%9F%92%A1;LUMEN;%F0%9F%92%A1LUMEN%F0%9F%92%A1" /></a>
+</p>
 
 La arquitectura de esta base de datos ha sido normalizada para garantizar la integridad y persistencia de la información, asegurando que cada asistencia sea comprobable y cumpla con las reglas de la institución.
+<p align='center'>
+	<img src=https://img.shields.io/badge/SQLite-%23003B57?style=plastic&logo=SQLite&logoColor=white&link=https%3A%2F%2Fsqlite.org%2F>
+	<img src=https://img.shields.io/badge/dbdiagram-%23003D8F?style=plastic&logo=diagrams.net&logoColor=white&link=https%3A%2F%2Fdbdiagram.io%2Fhome>
+	<img src=https://img.shields.io/badge/Google_Sheets-%2334A853?style=plastic&logo=google%20sheets&logoColor=white&link=https%3A%2F%2Fsheets.google.com>
+	<img src=https://img.shields.io/badge/XAMPP-%23FB7A24?style=plastic&logo=XAMPP&logoColor=white&link=https%3A%2F%2Fwww.apachefriends.org%2Fes%2Findex.html>
+	<img src=https://img.shields.io/badge/DB_Browser-%23343839?style=plastic&link=https%3A%2F%2Fsqlitebrowser.org>
+</p>
 
 ## :gear: Herramientas utilizadas:
 
