@@ -14,7 +14,7 @@ La arquitectura de esta base de datos ha sido normalizada para garantizar la int
 	<img src=https://img.shields.io/badge/DB_Browser-%23343839?style=plastic&link=https%3A%2F%2Fsqlitebrowser.org>
 </p>
 
-## :gear: Herramientas utilizadas:
+# ⚙ Herramientas utilizadas:
 
 * ### [dbdiagram](https://dbdiagram.io/home)
 
@@ -59,7 +59,7 @@ Plataforma online que trabaja con un Lenguaje Específico de Dominio (DSL) senci
 
 ![DB_Browser](img/dbbrowser3.png)
 
-## :triangular_ruler: Diagrama Entidad-Relación
+# 📐 Diagrama Entidad-Relación
 
 
 <p>
@@ -69,7 +69,7 @@ Plataforma online que trabaja con un Lenguaje Específico de Dominio (DSL) senci
   </a>
 </p>
 
-## :key: Creación de la BD en SQLite
+# 🔑 Creación de la BD en SQLite
 
 <p>
   <a href="https://github.com/GlaciusLAG/LAG_BD/raw/main/Proyecto_GA/src/tu_archivo.db">
@@ -92,6 +92,7 @@ Plataforma online que trabaja con un Lenguaje Específico de Dominio (DSL) senci
 - CHECK
 - CONSTRAINT
 - sqlite_secuence
+- `%`
 
 ## Estructuras de las tablas:
 
@@ -99,7 +100,7 @@ Plataforma online que trabaja con un Lenguaje Específico de Dominio (DSL) senci
 ```sql
 CREATE TABLE "carrera" (
 	"carrera_id"	INTEGER NOT NULL,
-	"nombre"	TEXT NOT NULL,
+	"nombre"	TEXT NOT NULL UNIQUE,
 	PRIMARY KEY("carrera_id" AUTOINCREMENT)
 );
 ```
@@ -127,6 +128,7 @@ CREATE TABLE "docente" (
 	"apellido_p"	TEXT NOT NULL,
 	"apellido_m"	TEXT,
 	PRIMARY KEY("matricula_docente")
+	CONSTRAINT "error_formtato_matricula_docente" CHECK ("matricula_docente" GLOB '[A-Z][0-9][0-9][0-9][0-9][0-9][A-Z]')
 );
 ```
 
@@ -141,7 +143,8 @@ CREATE TABLE "materia" (
 	"cuatrimestre_id"	INTEGER NOT NULL,
 	PRIMARY KEY("clave_materia"),
 	FOREIGN KEY("carrera_id") REFERENCES "carrera"("carrera_id"),
-	FOREIGN KEY("cuatrimestre_id") REFERENCES "cuatrimestre"("cuatrimestre_id")
+	FOREIGN KEY("cuatrimestre_id") REFERENCES "cuatrimestre"("cuatrimestre_id"),
+	CHECK("clave_materia" GLOB 'LISC-[0-9][0-9][0-9][0-9]')
 );
 ```
 
@@ -170,14 +173,14 @@ CREATE TABLE "ciclo_escolar" (
 CREATE TABLE "clase" (
 	"clase_id"	INTEGER NOT NULL,
 	"clave_materia"	TEXT NOT NULL,
-	"matricula_profesor"	TEXT NOT NULL,
+	"matricula_docente"	TEXT NOT NULL,
 	"cuatrimestre_id"	INTEGER NOT NULL,
 	"ciclo_id"	TEXT NOT NULL,
 	PRIMARY KEY("clase_id" AUTOINCREMENT),
 	FOREIGN KEY("ciclo_id") REFERENCES "ciclo_escolar"("ciclo_id"),
 	FOREIGN KEY("clave_materia") REFERENCES "materia"("clave_materia"),
 	FOREIGN KEY("cuatrimestre_id") REFERENCES "cuatrimestre"("cuatrimestre_id"),
-	FOREIGN KEY("matricula_profesor") REFERENCES "docente"("matricula_docente")
+	FOREIGN KEY("matricula_docente") REFERENCES "docente"("matricula_docente")
 );
 ```
 
@@ -279,4 +282,176 @@ CREATE TABLE "usuario" (
 	PRIMARY KEY("usuario_id" AUTOINCREMENT),
 	CONSTRAINT "error_nombre_rol" CHECK("rol" IN ('consultor', 'admin'))
 );
+```
+
+---
+
+# 📄 Captura de datos
+Dentro del software DB Browser, se ejecutarón los scripts de captura de datos dentro de la pestaña ***Execute SQL*** para cada una de las tablas _"maestras"_ de inicio.
+
+Los campos con valores por default son omitidos en la captura de datos.
+
+Estructura básica para la captura de datos:
+```SQL
+INSERT INTO nombre_tabla (columna1, columna2, ...) VALUES (valor1, valor2, ...);
+```
+
+- Ejemplo de script:
+```SQL
+INSERT INTO estudiante (
+	matricula_id,
+	nombre,
+	apellido_p,
+	apellido_m,
+	fecha_nacimiento
+)
+VALUES (
+	'24-1070016',
+	'Héctor Lenin',
+	'Almanza',
+	'García',
+	'1996-06-13'
+);
+```
+
+- Verificación de restricción `GLOB` (error_formato_matricula)
+
+<img src=img/ejemplo_error_formato.png width="60%">
+
+## Tablas madre:
+
+- ### estudiante
+```SQL
+INSERT INTO estudiante (matricula_id, nombre, apellido_p, apellido_m, fecha_nacimiento)
+VALUES
+	('23-1000001', 'Cristian Ramses', 'García', 'Huerta', '2006-01-01'),
+	('25-1000001', 'Andrea', 'Gutierrez', 'Castillo', '2006-01-01'),
+	('24-1000002', 'Palencia Quijaz', 'Angél', 'David', '2006-01-01')
+	('24-1070016', 'Héctor Lenin', 'Almanza', 'García', '1996-06-13'),
+	('24-1000001', 'Leonardo', 'de', 'Gastro', '2005-01-01'),
+	('24-1000003', 'Gabriela', 'Gutierrez', 'Castillo', '2003-01-01'),
+	('24-1000004', 'Leonardo', 'de', 'Sistemas', '2006-01-01'),
+	('25-1000005', 'Cristina', 'de', 'C de la E', '2006-01-01'),
+	('25-1070010', 'Marlon', 'de', 'conta', '2005-01-01');
+```
+
+- ### cuatrimestre
+```SQL
+INSERT INTO cuatrimestre (no_cuatrimestre)
+VALUES (1), (2), (3), (4), (5), (6), (7), (8), (9);
+```
+
+- ### ciclo_escolar
+```sql
+INSERT INTO ciclo_escolar (ciclo_id, fecha_inicio, fecha_fin)
+VALUES
+	('2025-1', '2025-01-01', '2025-04-30'),
+	('2025-2', '2025-05-01', '2025-08-31'),
+	('2025-3', '2025-09-01', '2025-12-31'),
+	('2026-1', '2026-01-01', '2026-04-30'),
+	('2026-2', '2026-05-01', '2026-08-31'),
+	('2026-3', '2026-09-01', '2026-12-31');
+```
+
+- ### carrera
+```sql
+INSERT INTO carrera (nombre)
+VALUES
+	('Licenciatura en Ingeniería en Sistemas Computacionales'),
+	('Licenciatura en Administración'),
+	('Licenciatura en Gastronomía'),
+	('Licenciatura en Derecho'),
+	('Licenciatura en Ciencias de la Educación'),
+	('Licenciatura en Contaduría');
+```
+
+- ### docente
+```sql
+INSERT INTO docente (matricula_docente, nombre, apellido_p, apellido_m)
+VALUES
+	('A00001S', 'Alfredo', 'Benigno', 'Ramos'),
+	('D00001G', 'Dante', 'de', 'Gastronomía'),
+	('M00001C', 'Marco', 'de', 'Contaduría'),
+	('C00001A', 'Carolina', 'de', 'Administración'),
+	('L00001D', 'Luis', 'de', 'Derecho'),
+	('F00001S', 'Fabián', 'Arias', 'Cruz');
+```
+
+---
+
+## Tablas Hijas
+La captura de datos dentro de estas tablas, dependen de llaves foraneas (`FK`) de las tablas madre.
+
+En los campos correspondientes a las llaves foraneas será necesario identificar cada `ID` para su correcta referencia, por ejemplo, llenar la tabla ***clase*** requerirá identificar el `ID` de la materia correspondiente de entre todas las materias registradas. Este proceso puede tomar mucho tiempo en la identificacion de un identificador si hay muchos datos registrados.
+
+Para obtener los datos necesarios de manerá rápida y de esta forma agilizar su captura, se utiliza la siguiente `query`
+```SQL
+SELECT NombreCampoID, nombre
+FROM tabla
+WHERE nombre LIKE '%ValorNombre%'
+```
+Esta `query` nos permite identificar de manera rápida el valor `ID` de un **registro** específico.
+
+![get_id_query](img/get_id_query.png)
+
+### Uso de **subconsultas** `SELECT` dentro de un `INSERT`
+El uso de subconsultas dentro del mismo `INSERT` puede agilizar en algunos casos la obtención del `ID` de algun registro, dejando que **SQL** lo inserte de manera directa:
+
+- ### materia
+```SQL
+INSERT INTO materia (clave_materia, nombre, cuatrimestre_id, carrera_id)
+VALUES
+	('LISC-0843', 'Sistemas Distribuidos', 8,
+		(SELECT carrera_id FROM carrera WHERE nombre = 'Licenciatura en Ingeniería en Sistemas Computacionales')),
+	('LISC-0844', 'Administración de Sistemas de Informática', 4,
+		(SELECT carrera_id FROM carrera WHERE nombre = 'Licenciatura en Administración')),
+	('LISC-0845', 'Bases Avanzadas de Datos', 8,
+		(SELECT carrera_id FROM carrera WHERE nombre = 'Licenciatura en Ingeniería en Sistemas Computacionales')),
+	('LISC-0846', 'Auditoría y Seguridad en Sistemas', 2,
+		(SELECT carrera_id FROM carrera WHERE nombre = 'Licenciatura en Derecho')),
+	('LISC-0847', 'Inteligencia Artificial', 7,
+		(SELECT carrera_id FROM carrera WHERE nombre = 'Licenciatura en Ingeniería en Sistemas Computacionales')),
+	('LISC-0848', 'Laboratorio de Aplicaciones', 8,
+		(SELECT carrera_id FROM carrera WHERE nombre = 'Licenciatura en Gastronomía'));
+```
+
+- ### clase
+```SQL
+INSERT INTO clase (clave_materia, matricula_docente, cuatrimestre_id, ciclo_id)
+VALUES
+	('LISC-0843', 'A00001S', 8, '2026-1'),
+	('LISC-0844', 'C00001A', 4, '2025-2'),
+	('LISC-0845', 'F00001S', 8, '2026-1'),
+	('LISC-0846', 'L00001D', 2, '2025-3'),
+	('LISC-0847', 'A00001S', 8, '2026-1'),
+	('LISC-0848', 'D00001G', 8, '2026-1');
+```
+
+- ### horario
+```SQL
+INSERT INTO horario (clase_id, hora_inicio, hora_fin, dia_semana)
+VALUES
+	(1, '15:00:00', '17:00:00', 'Jueves'),
+		(1, '15:00:00', '16:00:00', 'Viernes'),
+	(2, '13:00:00', '14:00:00', 'Jueves'),
+		(2, '13:00:00', '15:00:00', 'Viernes'),
+	(3, '16:00:00', '17:00:00', 'Martes'),
+		(3, '15:00:00', '17:00:00', 'Miercoles'),
+	(4, '14:00:00', '15:00:00', 'Martes'),
+		(4, '13:00:00', '15:00:00', 'Miercoles'),
+	(5, '13:00:00', '15:00:00', 'Lunes'),
+		(5, '15:00:00', '17:00:00', 'Viernes'),
+	(6, '15:00:00', '17:00:00', 'Lunes'),
+		(3, '15:00:00', '16:00:00', 'Martes');
+```
+
+### Subconsultas Anidadas y el uso de JOIN
+
+- ### carga_academica
+```SQL
+INSERT INTO carga_academica (matricula_id, clase_id, ciclo_id)
+VALUES
+	('25-1000001', 2, '2025-3'),
+	('24-1000002',
+		(SELECT clase_id FROM clase WHERE clave_materia = (SELECT clave_materia FROM materia WHERE nombre = 'Administración de Sistemas de Informática'),
 ```
