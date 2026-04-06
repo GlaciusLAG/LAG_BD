@@ -93,6 +93,13 @@ Plataforma online que trabaja con un Lenguaje Específico de Dominio (DSL) senci
 - CONSTRAINT
 - sqlite_secuence
 - `%`
+- ALTER TABLE
+  - ADD COLUMN
+- UNION ALL
+- Subconsulta
+- JOIN
+- Alias
+- Concatenación `||`
 
 ## Estructuras de las tablas:
 
@@ -334,6 +341,46 @@ VALUES
 	('25-1000005', 'Cristina', 'de', 'C de la E', '2006-01-01'),
 	('25-1070010', 'Marlon', 'de', 'conta', '2005-01-01');
 ```
+La tabla estudiante fue actualizada, ya que cada estudiante no pertenecía a una carrera hasta ser registrado en la tabla **carga_academica**.
+El problema radica en la filtración de estudiantes, ya que al no pertenecer a una carrera, no es posible filtrarlos.
+
+Por ello, se ejecutó el siguiente script, para crear un campo `FK` a la tabla **carrera**:
+  
+  Este campo debe permitir **NULL** si hay registros existentes:
+```SQL
+ALTER TABLE estudiante
+	ADD COLUMN carrera_id INTEGER
+	REFERENCES carrera (carrera_id);
+```
+  Para visualizar los registros de estudiantes y al mismo tiempo el listado de carreras existentes para conocer los `IDs` correspondientes, utilizamos `UNION ALL`.
+```SQL
+SELECT 
+	matricula_id AS ID,
+	(nombre || ' ' || apellido_p) AS Estudiante,
+	'ESTUDIANTE' AS Tipo
+FROM estudiante
+UNION ALL
+SELECT
+	carrera_id AS ID,
+	nombre AS Carrera,
+	'CARRERA' AS Tipo
+FROM carrera;
+```
+- Actualización a registros existentes:
+Para asignar valores a un registro ya existente untilizamos `UPDATE`
+```SQL
+UPDATE estudiante 
+SET carrera_id = 1 
+WHERE nombre LIKE '%Cristian%' 
+   OR nombre LIKE '%Palencia%' 
+   OR nombre LIKE '%Héctor%';
+UPDATE estudiante SET carrera_id = 2 WHERE nombre = 'Andrea';
+UPDATE estudiante SET carrera_id = 3 WHERE nombre = 'Leonardo';
+UPDATE estudiante SET carrera_id = 4 WHERE nombre = 'Gabriela';
+UPDATE estudiante SET carrera_id = 5 WHERE nombre = 'Cristina';
+UPDATE estudiante SET carrera_id = 6 WHERE nombre = 'Marlon';
+```
+Con los datos actualizados, mediante la interfaz de modificación de tabla de DB Browser, se fija la el campo **carrera_id** como `NOT NULL`.
 
 - ### cuatrimestre
 ```SQL
@@ -446,8 +493,59 @@ VALUES
 ```
 
 ### Subconsultas Anidadas y el uso de JOIN
+El uso de **subconsultas anidadas** son una herramienta importante para la obtención de `IDs` cuando solo se conoce el valor de un registro, esto suele ocurrir cuando se trabaja en una base de datos normalizada.
+
+Además del uso de subconsultas anidadas, otro método para consultar un registro es mediante `Queries` usando `SELECT` y `JOIN`.  
 
 - ### carga_academica
+En este ejemplo, la tabla **carga_academica** se compone de su  `PK`, los demás campos son `FK`.
+
+**Ejercicio**: El llenado de los campos fueron mediante diferentes tecnicas para su demostración.
+- **Consulta de datos general**
+
+	Mediante el siguiente script generamos un diccionario que involucre la infomación necesaria para llenar la tabla **carga_academica**
+```SQL
+SELECT
+	--estudiante
+	e.matricula_id AS "Matricula",
+	e.nombre || ' ' || e.apellido_p || ' ' || e.apellido_m AS "Alumno",
+	carr_e.nombre AS "Carrera del Estudiante",
+	
+	--clase --materia
+	c.clase_id AS "ID de clase",
+	m.nombre AS "Materia",
+	m.cuatrimestre_id AS "Cuatrimestre",
+	
+	--ciclo_escolar
+	c.ciclo_id AS "Ciclo Escolar"
+	
+--Seleccionde la tabla estudiante
+FROM estudiante e
+--La unimos con la tabla carrera y comparamos datos:
+JOIN carrera carr_e ON e.carrera_id = carr_e.carrera_id;
+
+CROSS JOIN
+```
+
+
+
+
+- Matricula_id (**Consulta de datos JOIN**)
+
+	Usamos una consulta `JOIN` para obtener los datos que requiere la tabla "**carga_academica**".
+```SQL
+	SELECT c.clase_id, m.nombre AS Materia, c.ciclo_id
+	FROM clase c
+	JOIN materia m ON c.clave_materia = m.clave_materia;
+
+	SELECT e.matricula_id, (e.nombre || ' ' || e.apellido_p || ' ' || e.apellido_m) AS Estudiante
+	FROM estudiante e;
+```
+
+
+- clase_id (**subconsulta anidada**)
+- ciclo_id (**Captura de forma directa**)
+
 ```SQL
 INSERT INTO carga_academica (matricula_id, clase_id, ciclo_id)
 VALUES
