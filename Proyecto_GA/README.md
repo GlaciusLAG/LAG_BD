@@ -553,3 +553,38 @@ VALUES
 	('24-1000002',
 		(SELECT clase_id FROM clase WHERE clave_materia = (SELECT clave_materia FROM materia WHERE nombre = 'Administración de Sistemas de Informática'),
 ```
+
+# Introducción a JOIN
+
+```SQL
+SELECT *
+FROM t1
+LEFT JOIN 
+(t2, t3, t4) 
+ON 
+(t2.a AND t3.b = t1.b AND t4.c = t1.c)
+
+Equivalente a:
+
+SELECT *
+FROM t1
+LEFT JOIN
+(t2 CROSS JOIN t3 CROSS JOIN t4)
+ON 
+(t2.a = t1.a AND t3.b = t1.b AND t4.c = t1.c)
+```
+
+```SQL
+Creando un Alias:
+tbl_name AS alias_name
+
+SELECT t1.name, t2.salario
+FROM emleado AS t1 
+INNER JOIN info AS t2 
+ON t1.name = t2.name;
+
+SELECT t1.name, t2.slario
+FROM empleado t1 
+INNER JOIN info t2 
+ON t1.name = t2.name;
+```
