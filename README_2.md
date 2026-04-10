@@ -1,50 +1,45 @@
-# Decisiones Estratégicas (El "Qué" y "Para qué")
+# Decisiones estratégicas en sistemas y tecnologías de la información
+## Conceptos importantes:
+<div align=center>
+<img src="img/SI-TI.png" width="50%" alt="Sistemas de Información y Tecnologías de Información" >
+</div>
 
-- Quienes tomas estas decisiones (C-Level, Directivos) y su duración (largo plazo, 3-5 años).
-- PUNTO CLAVE: Se enfocan en la misión. Ejemplo: "Queremos ser la empresa líder en seguridad de datos en la nube".
-- RELACIÓN: Determinan qué tecnología se va a comprar a gran escala.
+<center>
+
+| **Sistemas de Información** | **Tecnologías de Información** |
+|:---------------------------:|:------------------------------:|
+|      Son un conjunto formal de procesos que, operando sobre una colección de datos estructurados en función de las necesidades específicas del negocio, recopila, elabora y distribuye la información necesaria para la operación de la organización.      |     Son los recursos tecnológicos (hardware, software) que constituyen el soporte físico y lógico para el tratamiento automatizado de la información.     |
+</center>
+
+## Pirámide de decisiones
+
+<div align=center>
+<img src="img/piramide.png" width="100%" alt="Piramide de decisiones" >
+</div>
+
+- **Dirección operativa**
+
+    Se encarga de que los procesos de negocio funcionen sin errores. La generación de los datos reflejan la operatividad del día a día.
+
+- **Dirección táctica**
+
+    Enfocada a la toma de decisiones a mediano plazo, la dirección táctica se encarga de la recopilación de la información interna para la toma de decisiones, planificación o control.
+
+- **Dirección estratégica**
+    
+    Se encarga de la recopilación de la información **externa**, con el fin de generar estrategias que signifiquen un beneficio para la empresa.
+    Quienes operan en esta capa son el director de tecnología y el director general.
+
+## Integración de la infraestructura
 
 ```mermaid
-graph TD
-    A[Autorrealización]
-    B[Reconocimiento]
-    C[Afiliación]
-    D[Seguridad]
-    E[/Fisiología/]
-
-    E --> D
-    D --> C
-    C --> B
-    B --> A
-
-    %% Estilos de color para gradiente
-    style A fill:#e6194b,color:#fff
-    style B fill:#3cb44b,color:#fff
-    style C fill:#ffe119
-    style D fill:#4363d8,color:#fff
-    style E fill:#f58231
+flowchart TD
+  A("Arquitectura Tecnológica") e1@--- B
+  e1@{ animation: fast }
+  B("Modelo de Datos") e2@--- C
+  e2@{ animation: fast }
+  C("Modelo de Procesos") e3@--- D("Modelo de Aplicaciones")
+  e3@{ animation: fast }
 ```
 
-# Decisiones Tácticas (El "Cómo")
-
-- Mandos medios (Gerentes de TI). Plazo medio (meses a 1 año).
-- PUNTO CLAVE: Planifican el uso de recursos para cumplir la estrategia. Ejemplo: "Para ser líderes en seguridad, vamos a implementar una arquitectura de Zero Trust y migrar a servidores dedicados".
-- RELACIÓN: Es el puente entre el sueño (Estrategia) y la realidad (Operación).
-
-
-
-# Decisiones Operativas (El "Día a día")
-
-- Supervisores y técnicos. Corto plaxo (diario/semanal).
-- PUNTO CLAVE: Tareas rutinarias y reglas establecidas. Ejemplo: "Asignar permisos a un nuevo usuario" o "Revisar los logs de firewall cada mañana".
-- RELACIÓN: Es donde el software y el hardware realmente "trbajan".
-
-
-# Integración de la infreastrucura de TI
-- INTEROPERABILIDAD: ¿Cómo hacen que un servidor Linux se hable con un cliente "indows o una base de datos antigua?
-- ESCALABILIDAD: ¿Que pasa si la decisión estratégica es crecer el doble en un mes?
-
-EJEMPLOS REALES:
-- ERP (SAP, Oracle): Centrelizan todas las decisiones de la empresa.
-- Contenedores (Docker/Kubernetes): Una decisión táctica para desplegar software rápido y estable.
-- Monitoreo (Zabbix, Grafana): Herramientas operativas para ver que todo esté en orden.
+La integración asegura que la tecnología no sea solo una herramienta, sino un pilar de la organización, donde cualquier cambio debe alinearse al modelo original y lograr un principio de consistencia.
