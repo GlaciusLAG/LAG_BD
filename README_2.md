@@ -1,7 +1,10 @@
 # Decisiones estratégicas en sistemas y tecnologías de la información
+
+![QR](img/qr.png)
+
 ## Conceptos importantes:
 <div align=center>
-<img src="img/SI-TI.png" width="50%" alt="Sistemas de Información y Tecnologías de Información" >
+<img src="img/SI-TI.png" width="75%" alt="Sistemas de Información y Tecnologías de Información" >
 </div>
 
 <center>
