@@ -100,10 +100,12 @@ Plataforma online que trabaja con un Lenguaje Específico de Dominio (DSL) senci
 - JOIN
 - Alias
 - Concatenación `||`
+- View
+- CASE / END
 
 ## Estructuras de las tablas:
 
-- ### carrera
+- ### **carrera**
 ```sql
 CREATE TABLE "carrera" (
 	"carrera_id"	INTEGER NOT NULL,
@@ -114,7 +116,7 @@ CREATE TABLE "carrera" (
 
 ---
 
-- ### cuatrimestre
+- ### **cuatrimestre**
 Uso de `CONSTRAINT` / `CHECK`
 ```sql
 CREATE TABLE "cuatrimestre" (
@@ -127,7 +129,7 @@ CREATE TABLE "cuatrimestre" (
 
 ---
 
-- ### docente
+- ### **docente**
 ```sql
 CREATE TABLE "docente" (
 	"matricula_docente"	TEXT NOT NULL,
@@ -141,7 +143,7 @@ CREATE TABLE "docente" (
 
 ---
 
-- ### materia
+- ### **materia**
 ```sql
 CREATE TABLE "materia" (
 	"clave_materia"	TEXT NOT NULL,
@@ -157,7 +159,7 @@ CREATE TABLE "materia" (
 
 ---
 
-- ### ciclo_escolar
+- ### **ciclo_escolar**
 
 Uso de la clausula `GLOB`
 ```sql
@@ -175,7 +177,7 @@ CREATE TABLE "ciclo_escolar" (
 
 ---
 
-- ### clase
+- ### **clase**
 ```sql
 CREATE TABLE "clase" (
 	"clase_id"	INTEGER NOT NULL,
@@ -193,7 +195,7 @@ CREATE TABLE "clase" (
 
 ---
 
-- ### horario
+- ### **horario**
 Uso de la clausula `IN`
 
 (`IN` como manejo de booleans)
@@ -209,13 +211,13 @@ CREATE TABLE "horario" (
 	CONSTRAINT "error_formato_horario_inicio" CHECK("hora_inicio" GLOB '[0-2][0-9]:[0-5][0-9]:[0-5][0-9]'),
 	CONSTRAINT "error_formato_horario_fin" CHECK("hora_fin" GLOB '[0-2][0-9]:[0-5][0-9]:[0-5][0-9]'),
 	CONSTRAINT "error_horario_fin" CHECK("hora_inicio" < "hora_fin"),
-	CONSTRAINT "error_dia_semana" CHECK("dia_semana" IN ('Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'))
+	CONSTRAINT "error_dia_semana" CHECK("dia_semana" IN ('Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'))
 );
 ```
 
 ---
 
-- ### estudiante
+- ### **estudiante**
 ```sql
 CREATE TABLE "estudiante" (
 	"matricula_id"	TEXT NOT NULL,
@@ -235,7 +237,7 @@ CREATE TABLE "estudiante" (
 
 ---
 
-- ### carga_academica
+- ### **carga_academica**
 Creación de `UNIQUE INDEX`
 ```sql
 CREATE TABLE "carga_academica" (
@@ -256,16 +258,16 @@ CREATE UNIQUE INDEX "idx_carga_unica" ON "carga_academica" ("matricula_id", "cla
 
 ---
 
-- ### asistencia
+- ### **asistencia**
 ```sql
 CREATE TABLE "asistencia" (
 	"asistencia_id"	INTEGER NOT NULL,
 	"universal_id"	TEXT NOT NULL,
 	"matricula_id"	TEXT NOT NULL,
-	"fecha"	TEXT NOT NULL,
-	"hora"	TEXT NOT NULL,
+    "fecha" TEXT NOT NULL DEFAULT (date('now', 'localtime')),
+    "hora" TEXT NOT NULL DEFAULT (time('now', 'localtime')),
 	"opcion_menu"	TEXT NOT NULL,
-	"clase_id"	INTEGER NOT NULL,
+	"clase_id"	INTEGER,
 	"sincronizado"	INTEGER NOT NULL DEFAULT 0,
 	PRIMARY KEY("asistencia_id" AUTOINCREMENT),
 	FOREIGN KEY("clase_id") REFERENCES "clase"("clase_id"),
@@ -273,13 +275,14 @@ CREATE TABLE "asistencia" (
 	CONSTRAINT "error_formato_fecha" CHECK("fecha" GLOB '[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]'),
 	CONSTRAINT "error_formato_hora" CHECK("hora" GLOB '[0-2][0-9]:[0-5][0-9]:[0-5][0-9]'),
 	CONSTRAINT "error_asistencia_opcion_menu" CHECK("opcion_menu" IN ('entrada', 'salida', 'horario')),
-	CONSTRAINT "error_asistencia_sincronizado" CHECK("sincronizado" IN (0,1))
+	CONSTRAINT "error_asistencia_sincronizado" CHECK("sincronizado" IN (0, 1))
+);
 );
 ```
 
 ---
 
-- ### usuario
+- ### **usuario**
 ```sql
 CREATE TABLE "usuario" (
 	"usuario_id"	INTEGER NOT NULL,
@@ -327,7 +330,7 @@ VALUES (
 
 ## Tablas madre:
 
-- ### estudiante
+- ### **estudiante**
 ```SQL
 INSERT INTO estudiante (matricula_id, nombre, apellido_p, apellido_m, fecha_nacimiento)
 VALUES
@@ -382,13 +385,13 @@ UPDATE estudiante SET carrera_id = 6 WHERE nombre = 'Marlon';
 ```
 Con los datos actualizados, mediante la interfaz de modificación de tabla de DB Browser, se fija la el campo **carrera_id** como `NOT NULL`.
 
-- ### cuatrimestre
+- ### **cuatrimestre**
 ```SQL
 INSERT INTO cuatrimestre (no_cuatrimestre)
 VALUES (1), (2), (3), (4), (5), (6), (7), (8), (9);
 ```
 
-- ### ciclo_escolar
+- ### **ciclo_escolar**
 ```sql
 INSERT INTO ciclo_escolar (ciclo_id, fecha_inicio, fecha_fin)
 VALUES
@@ -400,7 +403,7 @@ VALUES
 	('2026-3', '2026-09-01', '2026-12-31');
 ```
 
-- ### carrera
+- ### **carrera**
 ```sql
 INSERT INTO carrera (nombre)
 VALUES
@@ -412,7 +415,7 @@ VALUES
 	('Licenciatura en Contaduría');
 ```
 
-- ### docente
+- ### **docente**
 ```sql
 INSERT INTO docente (matricula_docente, nombre, apellido_p, apellido_m)
 VALUES
@@ -444,7 +447,7 @@ Esta `query` nos permite identificar de manera rápida el valor `ID` de un **reg
 ### Uso de **subconsultas** `SELECT` dentro de un `INSERT`
 El uso de subconsultas dentro del mismo `INSERT` puede agilizar en algunos casos la obtención del `ID` de algun registro, dejando que **SQL** lo inserte de manera directa:
 
-- ### materia
+- ### **materia**
 ```SQL
 INSERT INTO materia (clave_materia, nombre, cuatrimestre_id, carrera_id)
 VALUES
@@ -462,7 +465,7 @@ VALUES
 		(SELECT carrera_id FROM carrera WHERE nombre = 'Licenciatura en Gastronomía'));
 ```
 
-- ### clase
+- ### **clase**
 ```SQL
 INSERT INTO clase (clave_materia, matricula_docente, cuatrimestre_id, ciclo_id)
 VALUES
@@ -474,7 +477,7 @@ VALUES
 	('LISC-0848', 'D00001G', 8, '2026-1');
 ```
 
-- ### horario
+- ### **horario**
 ```SQL
 INSERT INTO horario (clase_id, hora_inicio, hora_fin, dia_semana)
 VALUES
@@ -483,9 +486,9 @@ VALUES
 	(2, '13:00:00', '14:00:00', 'Jueves'),
 		(2, '13:00:00', '15:00:00', 'Viernes'),
 	(3, '16:00:00', '17:00:00', 'Martes'),
-		(3, '15:00:00', '17:00:00', 'Miercoles'),
+		(3, '15:00:00', '17:00:00', 'Miércoles'),
 	(4, '14:00:00', '15:00:00', 'Martes'),
-		(4, '13:00:00', '15:00:00', 'Miercoles'),
+		(4, '13:00:00', '15:00:00', 'Miércoles'),
 	(5, '13:00:00', '15:00:00', 'Lunes'),
 		(5, '15:00:00', '17:00:00', 'Viernes'),
 	(6, '15:00:00', '17:00:00', 'Lunes'),
@@ -497,94 +500,73 @@ El uso de **subconsultas anidadas** son una herramienta importante para la obten
 
 Además del uso de subconsultas anidadas, otro método para consultar un registro es mediante `Queries` usando `SELECT` y `JOIN`.  
 
-- ### carga_academica
+- ### **carga_academica**
 En este ejemplo, la tabla **carga_academica** se compone de su  `PK`, los demás campos son `FK`.
 
-**Ejercicio**: El llenado de los campos fueron mediante diferentes tecnicas para su demostración.
-- **Consulta de datos general**
+**Diccionario**
 
-	Mediante el siguiente script generamos un diccionario que involucre la infomación necesaria para llenar la tabla **carga_academica**
+Mediante el siguiente script generamos un diccionario que involucre la infomación necesaria para llenar la tabla **carga_academica**
 ```SQL
 SELECT
 	--estudiante
 	e.matricula_id AS "Matricula",
 	e.nombre || ' ' || e.apellido_p || ' ' || e.apellido_m AS "Alumno",
-	carr_e.nombre AS "Carrera del Estudiante",
-	
-	--clase --materia
+	carr_e.nombre AS "Carrera del Estudiante",	
+	--clase y materia
 	c.clase_id AS "ID de clase",
 	m.nombre AS "Materia",
 	m.cuatrimestre_id AS "Cuatrimestre",
-	
 	--ciclo_escolar
 	c.ciclo_id AS "Ciclo Escolar"
-	
---Seleccionde la tabla estudiante
 FROM estudiante e
---La unimos con la tabla carrera y comparamos datos:
-JOIN carrera carr_e ON e.carrera_id = carr_e.carrera_id;
-
-CROSS JOIN
+	JOIN carrera carr_e ON e.carrera_id = carr_e.carrera_id
+	CROSS JOIN clase c
+		JOIN materia m ON c.clave_materia = m.clave_materia
+		JOIN carrera carr_m ON m.carrera_id = carr_m.carrera_id
+			WHERE carr_e.carrera_id = carr_m.carrera_id
+		AND c.ciclo_id = '2026-1'
+	ORDER BY carr_e.nombre ASC, m.cuatrimestre_id ASC;
 ```
-
-
-
-
-- Matricula_id (**Consulta de datos JOIN**)
-
-	Usamos una consulta `JOIN` para obtener los datos que requiere la tabla "**carga_academica**".
-```SQL
-	SELECT c.clase_id, m.nombre AS Materia, c.ciclo_id
-	FROM clase c
-	JOIN materia m ON c.clave_materia = m.clave_materia;
-
-	SELECT e.matricula_id, (e.nombre || ' ' || e.apellido_p || ' ' || e.apellido_m) AS Estudiante
-	FROM estudiante e;
-```
-
-
-- clase_id (**subconsulta anidada**)
-- ciclo_id (**Captura de forma directa**)
+#### Con el resultado de la `query` se creó una `View`
+![Tabla general de estudiante](img/query_1.png)
 
 ```SQL
 INSERT INTO carga_academica (matricula_id, clase_id, ciclo_id)
 VALUES
-	('25-1000001', 2, '2025-3'),
-	('24-1000002',
-		(SELECT clase_id FROM clase WHERE clave_materia = (SELECT clave_materia FROM materia WHERE nombre = 'Administración de Sistemas de Informática'),
+	('24-1000001', 6, '2026-1'),
+	('24-1000004', 6, '2026-1'),
+	('23-1000001', 5, '2026-1'),
+	('24-1000002', 5, '2026-1'),
+	('24-1070016', 5, '2026-1'),
+	('23-1000001', 1, '2026-1'),
+	('23-1000001', 3, '2026-1'),
+	('24-1000002', 1, '2026-1'),
+	('24-1000002', 3, '2026-1'),
+	('24-1070016', 1, '2026-1'),
+	('24-1070016', 3, '2026-1');
 ```
 
-# Introducción a JOIN
-
+- ### **asistencia**
+La tabla asistencia requirió una modificación, al principio el campo `clase_id` se definió como campo `NOT NULL`, sin embargo considerando diferentes escenarios, para evitar posibles errores ahora el campo permite `NULL`.
 ```SQL
-SELECT *
-FROM t1
-LEFT JOIN 
-(t2, t3, t4) 
-ON 
-(t2.a AND t3.b = t1.b AND t4.c = t1.c)
-
-Equivalente a:
-
-SELECT *
-FROM t1
-LEFT JOIN
-(t2 CROSS JOIN t3 CROSS JOIN t4)
-ON 
-(t2.a = t1.a AND t3.b = t1.b AND t4.c = t1.c)
-```
-
-```SQL
-Creando un Alias:
-tbl_name AS alias_name
-
-SELECT t1.name, t2.salario
-FROM emleado AS t1 
-INNER JOIN info AS t2 
-ON t1.name = t2.name;
-
-SELECT t1.name, t2.slario
-FROM empleado t1 
-INNER JOIN info t2 
-ON t1.name = t2.name;
+INSERT INTO asistencia (universal_id, matricula_id, opcion_menu, clase_id)
+VALUES (
+    'UUID-PRUEBA',
+    '23-1000001',
+    'entrada',
+    (SELECT c.clase_id 
+		FROM clase c
+		JOIN horario h ON c.clase_id = h.clase_id
+		JOIN carga_academica ca ON c.clase_id = ca.clase_id
+		WHERE ca.matricula_id = '23-1000001'
+		  AND h.dia_semana = (
+			  CASE strftime('%w', 'now', 'localtime')
+				  WHEN '1' THEN 'Lunes' WHEN '2' THEN 'Martes' 
+				  WHEN '3' THEN 'Miércoles' WHEN '4' THEN 'Jueves' 
+				  WHEN '5' THEN 'Viernes'
+			  END)
+		  AND h.hora_fin > time('now', 'localtime')
+		  ORDER BY h.hora_inicio ASC 
+     LIMIT 1)
+);
 ```
