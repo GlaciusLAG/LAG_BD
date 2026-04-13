@@ -570,3 +570,53 @@ VALUES (
      LIMIT 1)
 );
 ```
+---
+
+# 🔍Pruebas
+El siguiente `View` muestra todos los registros aun no sincronizados:
+```SQL
+CREATE VIEW registros_pendientes AS
+SELECT * FROM asistencia WHERE sincronizado = 0;
+```
+El siguiente `View` muestra un listado general de inasistencias por alumno del **ciclo_escolar 2026-1**
+```SQL
+CREATE VIEW reporte_inasistencia_general AS
+WITH RECURSIVE dias_ciclo(fecha_dia) AS 
+	(SELECT fecha_inicio 
+    FROM ciclo_escolar 
+		WHERE estatus = 1 
+		AND date('now', 'localtime') BETWEEN fecha_inicio AND fecha_fin
+    UNION ALL
+    SELECT date(fecha_dia, '+1 day')
+    FROM dias_ciclo
+		WHERE fecha_dia < date('now', 'localtime')),
+		obligaciones_alumno AS 
+	(SELECT DISTINCT
+        ca.matricula_id,
+        dc.fecha_dia
+    FROM dias_ciclo dc
+    JOIN carga_academica ca ON 1=1
+    JOIN clase c ON ca.clase_id = c.clase_id
+    JOIN horario h ON c.clase_id = h.clase_id
+		WHERE h.dia_semana = (
+			CASE strftime('%w', dc.fecha_dia)
+				WHEN '1' THEN 'Lunes' WHEN '2' THEN 'Martes' 
+				WHEN '3' THEN 'Miércoles' WHEN '4' THEN 'Jueves' 
+				WHEN '5' THEN 'Viernes'
+	END))
+SELECT
+    e.matricula_id,
+    e.nombre || ' ' || e.apellido_p AS estudiante,
+    carr.nombre AS carrera,
+    COUNT(oa.fecha_dia) AS dias_ausente
+FROM estudiante e
+JOIN carrera carr ON e.carrera_id = carr.carrera_id
+JOIN obligaciones_alumno oa ON e.matricula_id = oa.matricula_id
+LEFT JOIN asistencia a 
+ON (oa.matricula_id = a.matricula_id 
+    AND oa.fecha_dia = a.fecha 
+    AND a.opcion_menu = 'entrada')
+WHERE a.asistencia_id IS NULL
+	GROUP BY e.matricula_id
+	ORDER BY dias_ausente DESC;
+```
