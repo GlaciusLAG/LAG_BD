@@ -726,3 +726,76 @@ data class DocenteEntity(
     @ColumnInfo(name = "apellido_m") val apellidoM: String?
 )
 ```
+- ### EstudianteEntity
+```kotlin
+package com.example.gestorasistencia.data.local.entities
+
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "estudiante")
+data class EstudianteEntity(
+    @PrimaryKey
+    @ColumnInfo(name = "matricula_id") val matriculaId: String,
+    @ColumnInfo(name = "nombre") val nombre: String,
+    @ColumnInfo(name = "apellido_p") val apellidoP: String,
+    @ColumnInfo(name = "apellido_m") val apellidoM: String?,
+    @ColumnInfo(name = "fecha_nacimiento") val fechaNacimiento: String,
+    @ColumnInfo(name = "estatus") val estatus: Int = 1,
+    @ColumnInfo(name = "sincronizado") val sincronizado: Int = 0,
+    @ColumnInfo(name = "carrera_id") val carreraId: Int
+)
+```
+- ### MateriaEntity
+```kotlin
+package com.example.gestorasistencia.data.local.entities
+
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "materia")
+data class MateriaEntity(
+    @PrimaryKey
+    @ColumnInfo(name = "clave_materia") val claveMateria: String,
+    @ColumnInfo(name = "nombre") val nombre: String,
+    @ColumnInfo(name = "carrera_id") val carreraId: Int,
+    @ColumnInfo(name = "cuatrimestre_id") val cuatrimestreId: Int
+)
+```
+- ### UsuarioEntity
+```kotlin
+package com.example.gestorasistencia.data.local.entities
+
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "usuario")
+data class UsuarioEntity(
+    @PrimaryKey (autoGenerate = true)
+    @ColumnInfo(name = "usuario_id") val usuarioId: Int = 0,
+    @ColumnInfo(name = "nombre_usuario") val nombreUsuario: String,
+    @ColumnInfo(name = "contrasena") val contrasena: String,
+    @ColumnInfo(name = "rol") val rol: String
+)
+```
+- ### HorarioEntity
+```kotlin
+package com.example.gestorasistencia.data.local.entities
+
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "horario")
+data class HorarioEntity(
+    @PrimaryKey (autoGenerate = true)
+    @ColumnInfo(name = "horario_id") val horarioId: Int = 0,
+    @ColumnInfo(name = "hora_inicio") val horaInicio: String,
+    @ColumnInfo(name = "hora_fin") val horaFin: String,
+    @ColumnInfo(name = "dia_semana") val diaSemana: String,
+    @ColumnInfo(name = "clase_id") val claseId: Int
+)
+```
