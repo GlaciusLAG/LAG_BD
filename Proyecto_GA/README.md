@@ -648,6 +648,7 @@ package com.example.gestorasistencia.data.local.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.Index
 
 @Entity(
     tableName = "carrera",
@@ -797,5 +798,43 @@ data class HorarioEntity(
     @ColumnInfo(name = "hora_fin") val horaFin: String,
     @ColumnInfo(name = "dia_semana") val diaSemana: String,
     @ColumnInfo(name = "clase_id") val claseId: Int
+)
+```
+- # Clases de entidades
+```kotlin
+package com.example.gestorasistencia.data.local
+
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import com.example.gestorasistencia.data.local.dao.AsistenciaDao
+import com.example.gestorasistencia.data.local.entities.AsistenciaEntity
+import com.example.gestorasistencia.data.local.entities.EstudianteEntity
+import com.example.gestorasistencia.data.local.entities.DocenteEntity
+import com.example.gestorasistencia.data.local.entities.CarreraEntity
+import com.example.gestorasistencia.data.local.entities.MateriaEntity
+import com.example.gestorasistencia.data.local.entities.CuatrimestreEntity
+import com.example.gestorasistencia.data.local.entities.CicloEscolarEntity
+import com.example.gestorasistencia.data.local.entities.ClaseEntity
+import com.example.gestorasistencia.data.local.entities.CargaAcademicaEntity
+import com.example.gestorasistencia.data.local.entities.HorarioEntity
+import com.example.gestorasistencia.data.local.entities.UsuarioEntity
+@Database(
+    entities = [
+        AsistenciaEntity::class,
+        EstudianteEntity::class,
+        DocenteEntity::class,
+        CarreraEntity::class,
+        MateriaEntity::class,
+        CuatrimestreEntity::class,
+        CicloEscolarEntity::class,
+        ClaseEntity::class,
+        CargaAcademicaEntity::class,
+        HorarioEntity::class,
+        UsuarioEntity::class
+    ],
+    version = 1, 
+    exportSchema = false // Desactivado temporalmente para agilizar la compilación en fase de prototipado
 )
 ```
