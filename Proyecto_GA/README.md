@@ -620,3 +620,109 @@ WHERE a.asistencia_id IS NULL
 	GROUP BY e.matricula_id
 	ORDER BY dias_ausente DESC;
 ```
+---
+# 👨‍💻Entityes
+
+- ### CargaAcademicaEntity
+```kotlin
+package com.example.gestorasistencia.data.local.entities
+
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "carga_academica")
+data class CargaAcademicaEntity(
+    @PrimaryKey (autoGenerate = true)
+    @ColumnInfo(name = "carga_id") val cargaId: Int = 0,
+    @ColumnInfo(name = "matricula_id") val matriculaId: String,
+    @ColumnInfo(name = "clase_id") val claseId: Int,
+    @ColumnInfo(name = "ciclo_id") val cicloId: String,
+    @ColumnInfo(name = "sincronizado") val sincronizado: Int = 0
+)
+```
+- ### CarreraEntity
+```kotlin
+package com.example.gestorasistencia.data.local.entities
+
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(
+    tableName = "carrera",
+    indices = [Index(value = ["nombre"], unique = true)]
+)
+data class CarreraEntity(
+    @PrimaryKey (autoGenerate = true)
+    @ColumnInfo(name = "carrera_id") val carreraId: Int = 0,
+    @ColumnInfo(name = "nombre") val nombre: String
+)
+```
+- ### CicloEscolarEntity
+```kotlin
+package com.example.gestorasistencia.data.local.entities
+
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "ciclo_escolar")
+data class CicloEscolarEntity(
+    @PrimaryKey
+    @ColumnInfo(name = "ciclo_id") val cicloId: String,
+    @ColumnInfo(name = "fecha_inicio") val fechaInicio: String,
+    @ColumnInfo(name = "fecha_fin") val fechaFin: String,
+    @ColumnInfo(name = "estatus") val estatus: Int = 1
+)
+```
+- ### ClaseEntity
+```kotlin
+package com.example.gestorasistencia.data.local.entities
+
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "clase")
+data class ClaseEntity(
+    @PrimaryKey (autoGenerate = true)
+    @ColumnInfo(name = "clase_id") val claseId: Int = 0,
+    @ColumnInfo(name = "clave_materia") val claveMateria: String,
+    @ColumnInfo(name = "matricula_docente") val matriculaDocente: String,
+    @ColumnInfo(name = "cuatrimestre_id") val cuatrimestre: Int,
+    @ColumnInfo(name = "ciclo_id") val cicloId: String
+)
+```
+- ### CuatrimestreEnity
+```kotlin
+package com.example.gestorasistencia.data.local.entities
+
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "cuatrimestre")
+data class CuatrimestreEntity(
+    @PrimaryKey (autoGenerate = true)
+    @ColumnInfo(name = "cuatrimestre_id") val cuatrimestreId: Int = 0,
+    @ColumnInfo(name = "no_cuatrimestre") val noCuatrimestre: Int
+)
+```
+- ### DocenteEntity
+```kotlin
+package com.example.gestorasistencia.data.local.entities
+
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "docente")
+data class DocenteEntity(
+    @PrimaryKey
+    @ColumnInfo(name = "matricula_docente") val matriculaDocente: String,
+    @ColumnInfo(name = "nombre") val nombre: String,
+    @ColumnInfo(name = "apellido_p") val apellidoP: String,
+    @ColumnInfo(name = "apellido_m") val apellidoM: String?
+)
+```
